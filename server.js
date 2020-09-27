@@ -51,3 +51,23 @@ app.get("/moves/:token", (req, res, next) => {
     }
     else return res.json("TOKEN NOT VALID");
 });
+
+app.get("/", (req, res, next) => {
+    return res.json({
+        "api_endpoints" : {
+            "/start" : {
+                "type" : "GET",
+                "description": "returns unique token",
+            },
+            "/play" : {
+                "type" : "POST",
+                "description" : "move is made by player and returns the status of game(WIN/DRAW/NEXT_TURN)",
+                "input" : "token: {token}, column: {column number 1-7}"
+            },
+            "/moves/:{token}" : {
+                "type" : "GET",
+                "description" : "return the array of moves(column number) made by both the players till now"
+            }
+        }
+    })
+})
