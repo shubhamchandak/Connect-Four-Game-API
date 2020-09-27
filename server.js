@@ -5,7 +5,7 @@ const gameController = require("./controller/game");
 
 const app = express();
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 app.use(bodyParser.json());
 
