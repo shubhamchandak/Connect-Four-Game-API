@@ -12,11 +12,12 @@ exports.createNewGame = (cb) => {
 }
 
 exports.getTokenStatus = (token) => {
+    if(!token) return "Token not found!"
     const data = require(dbPath);
     if(data[token]) {
         return data[token]["game_status"];
     }
-    return "INVALID TOKEN";
+    return "Invalid token!";
 }
 
 exports.isColumnFull = (token, column) => {
@@ -42,10 +43,10 @@ exports.play = (token, column) => {
     if(isWin(game["matrix"], row, column-1)) {
         game["winner"] = game["current_player"] ? "RED" : "YELLOW";
         game["game_status"] = "INACTIVE";
-        game["result"] = game["current_player"] ? "RED WINS!" : "YELLOW WINS!";
+        game["result"] = game["current_player"] ? "Red wins" : "Yellow wins";
     } else if(isDraw(game["matrix"])) {
         game["game_status"] = "INACTIVE";
-        game["result"] = "IT IS A DRAW!"
+        game["result"] = "It is a draw!"
     }
     fs.writeFileSync(dbPath, JSON.stringify(data));
     return {status: game["result"], game: game["matrix"]};
