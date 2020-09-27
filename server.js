@@ -25,7 +25,7 @@ app.post("/play", (req, res, next) => {
     }
 
     // if column is from 1 to 7
-    if(column < 1 || column > 7) {
+    if(!column || isNaN(column) || column < 1 || column > 7) {
         return res.status(400).json("Invalid move! Kindly provide column number from 1 to 7 only.")
     }
         
@@ -63,7 +63,7 @@ app.get("/gamedetails/:token", (req, res, next) => {
     let tokenStatus = gameController.getTokenStatus(token);
     if (!token) {
         return res.status(400).json("Token not found");
-    } else if(tokenStatus != "ACTIVE"){
+    } else if(tokenStatus != "ACTIVE" && tokenStatus != "INACTIVE"){
         return res.status(400).json("Invalid token");
     }
 

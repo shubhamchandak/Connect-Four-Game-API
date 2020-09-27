@@ -5,7 +5,7 @@ const dbPath = path.join(__dirname, "..", "database.json");
 const Game = require("./../models/game");
 
 exports.createNewGame = (cb) => {
-    const token = Math.random();
+    const token = Date.now();
     const data = require(dbPath);
     data[token] = new Game();
     fs.writeFile(dbPath, JSON.stringify(data), (err) => cb(token));
@@ -78,9 +78,9 @@ function isWin(matrix, I, J) {
     }
 
     // check diagonals
-    for(let i = I-7, j = J-7, counter = 1; i < 6 && j < 7; i++, j++) {
-        if(i > 0 && j > 0) {
-            if(matrix[i][j] == matrix[i-1][j-1] && matrix[i][j] != 0) counter++;
+    for(let i = I+7, j = J-7, counter = 1; i >= 0 && j < 7; i--, j++) {
+        if(i < 5 && j > 0) {
+            if(matrix[i][j] == matrix[i+1][j-1] && matrix[i][j] != 0) counter++;
             else counter = 1;
             if(counter == 4) return true;
         }
